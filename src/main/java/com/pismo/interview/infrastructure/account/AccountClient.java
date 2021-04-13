@@ -1,5 +1,6 @@
 package com.pismo.interview.infrastructure.account;
 
+import com.pismo.interview.infrastructure.account.entity.Account;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Component;

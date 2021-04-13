@@ -1,4 +1,4 @@
-package com.pismo.interview.infrastructure.account;
+package com.pismo.interview.infrastructure.account.entity;
 
 import lombok.Data;
 

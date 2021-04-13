@@ -13,9 +13,12 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>pismo-interview-project</name>
     <description>Demo project for Spring Boot</description>
+
     <properties>
         <java.version>11</java.version>
+        <testcontainers.version>1.15.2</testcontainers.version>
     </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -73,6 +76,26 @@
             <groupId>org.pitest</groupId>
             <artifactId>pitest</artifactId>
             <version>1.6.4</version>
+        </dependency>
+
+        <!-- TESTCONTAINERS -->
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>testcontainers</artifactId>
+            <version>${testcontainers.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>${testcontainers.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>${testcontainers.version}</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
@@ -132,9 +155,13 @@
                 </dependencies>
                 <configuration>
                     <excludedClasses>
-                        <param>com.pismo.interview.generated*</param>
-                        <param>com.pismo.interview.configurations*</param>
+                        <param>com.pismo.interview.generated.*</param>
+                        <param>com.pismo.interview.application.configurations.*</param>
+                        <param>com.pismo.interview.infrastructure.**.entity.*</param>
                     </excludedClasses>
+                    <excludedTestClasses>
+                        <param>com.pismo.interview.infrastructure.**.*Repository*</param>
+                    </excludedTestClasses>
                 </configuration>
             </plugin>
         </plugins>
