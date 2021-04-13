@@ -1,4 +1,4 @@
-package com.pismo.interview.application.configuration;
+package com.pismo.interview.application.configurations;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

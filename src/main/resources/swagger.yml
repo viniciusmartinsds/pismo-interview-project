@@ -25,10 +25,30 @@ paths:
 components:
   schemas:
     AccountRequest:
+      type: object
       properties:
         document_number:
           type: string
           description: Document number
           example: "12345678900"
+          minLength: 1
       required:
         - document_number
+    ErrorResponse:
+      type: object
+      properties:
+        status:
+          type: integer
+        message:
+          type: string
+        validationErros:
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidationError'
+    ValidationError:
+      type: object
+      properties:
+        field:
+          type: string
+        message:
+          type: string
