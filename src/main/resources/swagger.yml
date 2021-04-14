@@ -21,7 +21,30 @@ paths:
       responses:
         '201':
           description: Account created
-
+  /accounts/{accountId}:
+    get:
+      summary: Find an account.
+      description: Find an account by id.
+      operationId: find
+      tags:
+        - Account
+      parameters:
+        - name: accountId
+          in: path
+          required: true
+          description: Account id
+          example: 1
+          schema:
+            type: integer
+            format: int64
+            minimum: 1
+      responses:
+        '200':
+          description: Account returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountResponse'
 components:
   schemas:
     AccountRequest:
@@ -34,6 +57,18 @@ components:
           minLength: 1
       required:
         - document_number
+    AccountResponse:
+      type: object
+      properties:
+        account_id:
+          type: integer
+          format: int64
+          description: Account id
+          example: "1"
+        document_number:
+          type: string
+          description: Document number
+          example: "12345678900"
     ErrorResponse:
       type: object
       properties:

@@ -2,6 +2,7 @@ package com.pismo.interview.application.handles;
 
 import com.pismo.interview.generated.model.ErrorResponse;
 import com.pismo.interview.generated.model.ValidationError;
+import com.pismo.interview.infrastructure.commons.exceptions.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -20,8 +21,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<ErrorResponse> handleDataIntegrityViolationException(DataIntegrityViolationException exception) {
-        var errorResponse = new ErrorResponse();
-        errorResponse.setMessage(exception.getLocalizedMessage());
+        var errorResponse = createErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), exception.getLocalizedMessage());
 
         if (exception.getCause() instanceof ConstraintViolationException) {
             var constraintException = ((ConstraintViolationException) exception.getCause());
@@ -38,9 +38,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorResponse> handleMethodArgumentNotValidException(MethodArgumentNotValidException exception) {
-        var errorResponse = new ErrorResponse();
-        errorResponse.setStatus(HttpStatus.BAD_REQUEST.value());
-        errorResponse.setMessage(exception.getLocalizedMessage());
+        var errorResponse = createErrorResponse(HttpStatus.BAD_REQUEST.value(), exception.getLocalizedMessage());
 
         var result = exception.getBindingResult();
         var fields = result.getFieldErrors();
@@ -48,4 +46,22 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
     }
+
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleEntityNotFoundException(EntityNotFoundException exception) {
+        var errorResponse = createErrorResponse(HttpStatus.NOT_FOUND.value(), exception.getLocalizedMessage());
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
+    }
+
+    private ErrorResponse createErrorResponse(int httpStatus, String message) {
+        var errorResponse = new ErrorResponse();
+
+        errorResponse.setStatus(httpStatus);
+        errorResponse.setMessage(message);
+
+        return errorResponse;
+    }
+
+
 }
