@@ -39,6 +39,10 @@ mvn clean verify spring-boot:run
 ```
 and the project will starts;
 
+## Liquibase
+All database changelogs can be found [here](https://github.com/viniciusmartinsds/pismo-interview-project/tree/main/src/main/resources/db/changelog).
+To run liquibase, just run the application, spring deals with everything =D
+
 ## Run our mutation test
 It's very important mutation tests on our project, mostly to accurence our code.
 To run that, on our root folder, run the command: 
