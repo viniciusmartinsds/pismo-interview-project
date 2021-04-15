@@ -1,0 +1,16 @@
+version: "3.9"
+
+services:
+  pismo-postgres:
+    image: postgres:13.2
+    environment:
+      - POSTGRES_USER=pismo
+      - POSTGRES_PASSWORD=123456
+      - POSTGRES_DB=pismointerview
+    ports:
+      - "5432:5432"
+
+  pismo-redis:
+    image: redis:6.2.1
+    ports:
+      - "6379:6379"
