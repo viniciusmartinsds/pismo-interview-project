@@ -1,8 +1,9 @@
-package com.pismo.interview.application.handles;
+package com.pismo.interview.application.handlers;
 
+import com.pismo.interview.application.exceptions.EntityNotFoundException;
+import com.pismo.interview.application.exceptions.TransactionNotAllowedException;
 import com.pismo.interview.generated.model.ErrorResponse;
 import com.pismo.interview.generated.model.ValidationError;
-import com.pismo.interview.infrastructure.commons.exceptions.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -42,7 +43,7 @@ public class GlobalExceptionHandler {
 
         var result = exception.getBindingResult();
         var fields = result.getFieldErrors();
-        fields.stream().parallel().forEach(error -> errorResponse.addValidationErrosItem(new ValidationError().field(error.getField()).message(error.getDefaultMessage())));
+        fields.forEach(error -> errorResponse.addValidationErrosItem(new ValidationError().field(error.getField()).message(error.getDefaultMessage())));
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
     }
@@ -52,6 +53,13 @@ public class GlobalExceptionHandler {
         var errorResponse = createErrorResponse(HttpStatus.NOT_FOUND.value(), exception.getLocalizedMessage());
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
+    }
+
+    @ExceptionHandler(TransactionNotAllowedException.class)
+    public ResponseEntity<ErrorResponse> handleTransactionNotAllowedException(TransactionNotAllowedException exception) {
+        var errorResponse = createErrorResponse(HttpStatus.BAD_REQUEST.value(), exception.getLocalizedMessage());
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
     }
 
     private ErrorResponse createErrorResponse(int httpStatus, String message) {

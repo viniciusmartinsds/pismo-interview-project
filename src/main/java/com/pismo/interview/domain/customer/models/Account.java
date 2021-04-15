@@ -1,13 +1,14 @@
-package com.pismo.interview.infrastructure.account.entity;
+package com.pismo.interview.domain.customer.models;
 
 import lombok.Data;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Data
 @Entity
 @Table(name = "accounts")
-public class Account {
+public class Account implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

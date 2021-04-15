@@ -1,6 +1,6 @@
-package com.pismo.interview.infrastructure.account;
+package com.pismo.interview.infrastructure;
 
-import com.pismo.interview.infrastructure.account.entity.Account;
+import com.pismo.interview.domain.customer.models.Account;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 

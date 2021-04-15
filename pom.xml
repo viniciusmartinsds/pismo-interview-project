@@ -139,6 +139,12 @@
                                 <performBeanValidation>true</performBeanValidation>
                                 <useBeanValidation>true</useBeanValidation>
                                 <library>spring-boot</library>
+                                <typeMappings>
+                                    <typeMapping>bigDecimal=BigDecimal</typeMapping>
+                                </typeMappings>
+                                <importMappings>
+                                    <importMapping>BigDecimal=java.math.BigDecimal</importMapping>
+                                </importMappings>
                             </configOptions>
                         </configuration>
                     </execution>
@@ -160,10 +166,13 @@
                     <excludedClasses>
                         <param>com.pismo.interview.generated.*</param>
                         <param>com.pismo.interview.application.configurations.*</param>
-                        <param>com.pismo.interview.infrastructure.**.entity.*</param>
+                        <param>com.pismo.interview.infrastructure.*</param>
+                        <param>com.pismo.interview.domain.customer.models.*</param>
+                        <param>com.pismo.interview.domain.customer.dto.*</param>
                     </excludedClasses>
                     <excludedTestClasses>
-                        <param>com.pismo.interview.infrastructure.**.*Repository*</param>
+                        <param>com.pismo.interview.infrastructure.*</param>
+                        <param>com.pismo.interview.PismoInterviewProjectApplicationTests</param>
                     </excludedTestClasses>
                 </configuration>
             </plugin>

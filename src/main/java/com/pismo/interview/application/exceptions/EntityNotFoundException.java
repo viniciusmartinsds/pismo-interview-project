@@ -1,4 +1,4 @@
-package com.pismo.interview.infrastructure.commons.exceptions;
+package com.pismo.interview.application.exceptions;
 
 public class EntityNotFoundException extends RuntimeException {
 

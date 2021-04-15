@@ -11,7 +11,7 @@ paths:
       description: Create an account by document number.
       operationId: create
       tags:
-        - Account
+        - Customer
       requestBody:
         required: true
         content:
@@ -27,7 +27,7 @@ paths:
       description: Find an account by id.
       operationId: find
       tags:
-        - Account
+        - Customer
       parameters:
         - name: accountId
           in: path
@@ -45,6 +45,23 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/AccountResponse'
+  /transactions:
+    post:
+      summary: Create a new transaction.
+      description: Create new transaction.
+      operationId: createTransaction
+      tags:
+        - Customer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransactionRequest'
+      responses:
+        '201':
+          description: Transaction created
+
 components:
   schemas:
     AccountRequest:
@@ -69,6 +86,24 @@ components:
           type: string
           description: Document number
           example: "12345678900"
+    TransactionRequest:
+      type: object
+      properties:
+        account_id:
+          type: integer
+          format: int64
+          example: 1
+        operation_type_id:
+          type: integer
+          format: int64
+          example: 1
+        amount:
+          type: bigDecimal
+          example: 123.45
+      required:
+        - account_id
+        - operation_type_id
+        - amount
     ErrorResponse:
       type: object
       properties:
